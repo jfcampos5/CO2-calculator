@@ -3,3 +3,12 @@
 server/.env
 *.log
 ecotrip-updated.zip
+
+# Ignorar arquivos zip
+*.zip
+
+# Ignorar node_modules
+node_modules
+
+# Ignorar arquivos de documentos
+*.odt
