@@ -14,14 +14,14 @@
   --brand-200: #a7f3d0;
   --brand-300: #6ee7b7;
   --brand-400: #34d399;
-  --brand-500: #10b981; /* verde principal */
+  --brand-500: #2aa079; /* verde principal */
   --brand-600: #059669;
   --brand-700: #047857;
   --brand-800: #065f46;
   --brand-900: #064e3b;
 
   --bg:        #f8fafc;   /* fundo app */
-  --card:      #ffffff;   /* fundo card */
+  --card:      #ffff;   /* fundo card */
   --muted:     #64748b;   /* texto secundário */
   --text:      #0f172a;   /* texto principal */
   --border:    #e2e8f0;   /* bordas leves */
