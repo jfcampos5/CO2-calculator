@@ -1,3 +1,77 @@
-﻿let map=null; let routeLayer=null;
-export async function initMap(){ if(typeof L==='undefined'){ await new Promise(r=>setTimeout(r,200)); } if(typeof L==='undefined') return null; if(!map){ map=L.map("map",{center:[-15.79,-47.88],zoom:4}); L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19}).addTo(map); } return map; }
-export async function getRouteDistance(origin,dest){ const res = await fetch("/api/route",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({origin,dest})}); if(!res.ok) return null; const j=await res.json(); if(!map) await initMap(); if(map && j.geometry){ if(routeLayer) map.removeLayer(routeLayer); routeLayer=L.geoJSON(j.geometry,{style:()=>({color:'#16a34a',weight:4})}).addTo(map); map.fitBounds(routeLayer.getBounds(),{padding:[40,40]}); } return j.distanceKm; }
+﻿// ================================
+// Integração com API de Mapas
+// ================================
+
+// Importa configurações globais
+import { MAP_API_KEY } from './config.js';
+
+/**
+ * Função para inicializar o mapa
+ * @param {string} elementId - ID do elemento HTML onde o mapa será renderizado
+ */
+function initMap(elementId) {
+  const map = new google.maps.Map(document.getElementById(elementId), {
+    zoom: 6,
+    center: { lat: -14.2350, lng: -51.9253 }, // Centro aproximado do Brasil
+  });
+
+  return map;
+}
+
+/**
+ * Função para calcular rota e distância entre dois pontos
+ * @param {string} origin - Endereço ou coordenada de origem
+ * @param {string} destination - Endereço ou coordenada de destino
+ * @param {function} callback - Função que recebe a distância em km
+ */
+function calculateRoute(origin, destination, callback) {
+  const service = new google.maps.DirectionsService();
+
+  service.route(
+    {
+      origin: origin,
+      destination: destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    },
+    (result, status) => {
+      if (status === 'OK') {
+        const route = result.routes[0].legs[0];
+        const distanceKm = route.distance.value / 1000; // metros → km
+        callback(distanceKm);
+      } else {
+        console.error('Erro ao calcular rota:', status);
+        callback(null);
+      }
+    }
+  );
+}
+
+/**
+ * Função para exibir rota no mapa
+ * @param {object} map - Instância do mapa
+ * @param {string} origin - Origem
+ * @param {string} destination - Destino
+ */
+function displayRoute(map, origin, destination) {
+  const renderer = new google.maps.DirectionsRenderer();
+  renderer.setMap(map);
+
+  const service = new google.maps.DirectionsService();
+  service.route(
+    {
+      origin: origin,
+      destination: destination,
+      travelMode: google.maps.TravelMode.DRIVING,
+    },
+    (result, status) => {
+      if (status === 'OK') {
+        renderer.setDirections(result);
+      } else {
+        console.error('Erro ao exibir rota:', status);
+      }
+    }
+  );
+}
+
+// Exporta funções para uso em outros módulos
+export { initMap, calculateRoute, displayRoute };
