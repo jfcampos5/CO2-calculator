@@ -1,10 +1,17 @@
 {
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "nodemon server/server.js"
+  },
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1"
   },
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.0",
+    "nodemon": "^3.0.0"
   }
 }
+
