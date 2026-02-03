@@ -64,7 +64,7 @@ Aqui está uma prévia da interface do aplicativo:
 
 ---
 ## 🌐 Acesse o App
-[Clique aqui para usar o CO₂ Calculator]([https://seu-link-aqui.vercel.app](https://jfcampos5.github.io/CO2-calculator/))
+[Clique aqui para usar o CO₂ Calculator](https://jfcampos5.github.io/CO2-calculator/)
 
 ---
 
