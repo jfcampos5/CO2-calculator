@@ -57,6 +57,13 @@ O objetivo é calcular as emissões de dióxido de carbono (CO₂) com base em d
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)![Console%20Logs](https://img.shields.io/badge/Console%20Logs-depuração-lightgrey?style=for-the-badge)![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)![Modularização](https://img.shields.io/badge/Modularização-arquitetura-blue?style=for-the-badge) <br>
 
 ---
+## 📸 Demonstração
+
+Aqui está uma prévia da interface do aplicativo:
+
+![Interface do App](public/assets/img/interface.png )
+
+---
 ## 📂 Estrutura de Pastas
 ````
 public/
