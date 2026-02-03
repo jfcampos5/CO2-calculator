@@ -1,6 +1,6 @@
 ﻿
 ---
-## <img src="public/assets/img/logo.png" alt="Logo do App" width="40" height="40">Calc CO₂
+## Calc CO₂<img src="public/assets/img/logo.png" alt="Logo do App" width="40" height="40">
 ---
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
