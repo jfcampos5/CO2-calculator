@@ -1,6 +1,6 @@
 ﻿
 ---
-#🌱Calc CO₂
+## <img src="public/assets/img/logo.png" alt="Logo do App" width="40" height="40">Calc CO₂
 ---
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
@@ -64,6 +64,11 @@ Aqui está uma prévia da interface do aplicativo:
 ![Interface do App](public/assets/img/interface.png )
 
 ---
+## 🌐 Acesse o App
+[Clique aqui para usar o CO₂ Calculator](https://seu-link-aqui.vercel.app)
+
+---
+
 ## 📂 Estrutura de Pastas
 ````
 public/
