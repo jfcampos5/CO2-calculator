@@ -33,6 +33,32 @@
   --info:      #3b82f6;
   --success:   #22c55e;
 
+  :root {
+  /* variáveis do tema claro */
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #0f172a;
+  /* ... resto das variáveis */
+}
+
+/* Dark mode automático (quando o sistema está em modo escuro) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --card: #121a2b;
+    --text: #e5e7eb;
+    /* ... resto das variáveis */
+  }
+}
+
+/* Dark mode manual via toggle: <html data-theme="dark"> */
+html[data-theme="dark"] {
+  --bg: #0b1220;
+  --card: #121a2b;
+  --text: #e5e7eb;
+  /* ... resto das variáveis */
+}
+
   /* Sombra / elevação */
   --shadow-1:  0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1);
   --shadow-2:  0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
@@ -109,6 +135,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Transição suave ao alternar tema */ transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
 /* Links básicos */
@@ -158,14 +185,14 @@ a:hover { text-decoration: underline; }
 .header-content {
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: center;
+  align-items:center;
   gap: var(--sp-5);
   padding-block: var(--sp-5);
 }
 
 .brand {
   display: grid;
-  grid-auto-flow: column;
+  grid-auto-flow:column;
   grid-auto-columns: max-content;
   align-items: center;
   gap: var(--sp-4);
@@ -193,7 +220,7 @@ a:hover { text-decoration: underline; }
 }
 @media (min-width: 992px) {
   .layout {
-    grid-template-columns: minmax(320px, 420px) 1fr;
+    grid-template-columns: minmax(510px, 420px) 1fr;
   }
 }
 

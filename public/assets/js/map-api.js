@@ -22,28 +22,30 @@ function initMap(elementId) {
  * Função para calcular rota e distância entre dois pontos
  * @param {string} origin - Endereço ou coordenada de origem
  * @param {string} destination - Endereço ou coordenada de destino
- * @param {function} callback - Função que recebe a distância em km
+ * @returns {Promise<number>} - Distância em km
  */
-function calculateRoute(origin, destination, callback) {
-  const service = new google.maps.DirectionsService();
+function calculateRoute(origin, destination) {
+  return new Promise((resolve, reject) => {
+    const service = new google.maps.DirectionsService();
 
-  service.route(
-    {
-      origin: origin,
-      destination: destination,
-      travelMode: google.maps.TravelMode.DRIVING,
-    },
-    (result, status) => {
-      if (status === 'OK') {
-        const route = result.routes[0].legs[0];
-        const distanceKm = route.distance.value / 1000; // metros → km
-        callback(distanceKm);
-      } else {
-        console.error('Erro ao calcular rota:', status);
-        callback(null);
+    service.route(
+      {
+        origin: origin,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === 'OK') {
+          const route = result.routes[0].legs[0];
+          const distanceKm = route.distance.value / 1000; // metros → km
+          resolve(distanceKm);
+        } else {
+          console.error('Erro ao calcular rota:', status);
+          reject(new Error(`Erro ao calcular rota: ${status}`));
+        }
       }
-    }
-  );
+    );
+  });
 }
 
 /**
