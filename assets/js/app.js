@@ -1,5 +1,6 @@
 ﻿import { initUI } from './ui.js';
 
+
 // Função para converter nome da cidade em coordenadas (lat/lng)
 async function getCoordinates(city, state) {
   const query = `${city}, ${state}, Brasil`;
