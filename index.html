@@ -8,6 +8,9 @@
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
   
+  <!-- Leaflet (mapa) --> 
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  
   <!-- Estilo personalizado -->
   <link rel="stylesheet" href="style.css">
 
@@ -369,6 +372,11 @@
     </div>
   </main>
 
+  <section class="card" data-panel="map" aria-labelledby="map-title">
+    <h2 id="map-title" class="card-title">Mapa da Rota</h2> 
+    <div id="map" class="map-container"></div> 
+  </section>
+
     <!-- ===== FOOTER ===== -->
   <footer class="app-footer" role="contentinfo">
     <div class="container">
@@ -380,6 +388,10 @@
       </p>
     </div>
   </footer>
+
+  <!-- Scripts --> 
+   <script src="ui.js"></script> 
+   <script src="map.js"></script> 
 
   <!-- Toasts -->
   <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true" role="status">
