@@ -1,9 +1,12 @@
-﻿// ================================
+// ================================
 // Integração com API de Mapas
 // ================================
 
-// Importa configurações globais
-import { MAP_API_KEY } from './config.js';
+/**
+ * Recupera a chave da API de mapas das variáveis de ambiente
+ * No Vercel, configure em Settings > Environment Variables
+ */
+const MAP_API_KEY = process.env.MAPS_API_KEY;
 
 /**
  * Função para inicializar o mapa
@@ -76,4 +79,4 @@ function displayRoute(map, origin, destination) {
 }
 
 // Exporta funções para uso em outros módulos
-export { initMap, calculateRoute, displayRoute };
+export { MAP_API_KEY, initMap, calculateRoute, displayRoute };
