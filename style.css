@@ -292,7 +292,7 @@ a:hover { text-decoration: underline; }
 }
 
 .card-header-gradient {
-  height: 96px;
+  height: 50px;
   margin: -1px -1px var(--sp-6) -1px;
   border-radius: var(--radius) var(--radius) 0 0;
   background:
