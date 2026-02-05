@@ -49,3 +49,25 @@ export function getFactorForTransportFuel(transport, fuel, wtw = false) {
 
   return wtw ? base * (WTW_MULTIPLIERS[fuel] || 1) : base;
 }
+
+/**
+ * Calcula emissões de CO₂ para uma viagem.
+ * @param {number} distancia - Distância em km
+ * @param {string} transport - Tipo de transporte
+ * @param {string} fuel - Tipo de combustível
+ * @param {boolean} wtw - Se true, aplica multiplicador Well-to-Wheel
+ * @param {object} ajustes - Objeto com ajustes (temperatura, relevo, velocidade, peso, tipoVia)
+ * @returns {number} Emissão total em kg CO₂
+ */
+export function calculateEmissions(distancia, transport, fuel, wtw = false, ajustes = {}) {
+  const fatorBase = getFactorForTransportFuel(transport, fuel, wtw);
+
+  // Ajustes simples (exemplo: relevo aumenta consumo, velocidade reduz eficiência etc.)
+  let multiplicador = 1;
+  if (ajustes.relevo === 'montanhoso') multiplicador *= 1.1;
+  if (ajustes.velocidade && ajustes.velocidade > 120) multiplicador *= 1.05;
+  if (ajustes.peso && ajustes.peso > 1000) multiplicador *= 1.02;
+
+  return distancia * fatorBase * multiplicador;
+}
+
