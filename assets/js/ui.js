@@ -1,12 +1,12 @@
 import { calculateEmissions } from './co2-factors.js';
-import { calculateDistanceHeiGIT } from './map-api.js'; // integração com HeiGIT
+import { geocodeLocation, calculateDistanceHeiGIT } from './map-api.js'; // integração com HeiGIT
 
 export async function initUI() {
   console.log('UI init');
 
   // Alternância de tema claro/escuro
-  const btnTheme = document.querySelector('#theme-toggle');
-  const htmlEl = document.documentElement; // <html>
+const btnTheme = document.querySelector('#theme-toggle');
+const htmlEl = document.documentElement; // <html>
 
   function applyTheme(theme) {
     htmlEl.setAttribute('data-theme', theme);
@@ -52,13 +52,14 @@ export async function initUI() {
     // Se não informado, buscar pela HeiGIT (somente se origem/destino existirem)
     if (!distancia && origem && destino) {
       try {
-        // Aqui você pode adaptar para converter origem/destino em coordenadas [lng, lat]
-        // Por enquanto, exemplo fixo para teste:
-        const origemCoords = [-46.6333, -23.5505];      // São Paulo
-        const destinoCoords = [-43.1964, -22.9083];     // Rio de Janeiro
+    // Aqui você pode adaptar para converter origem/destino em coordenadas [lng, lat]
+        
+    const origemCoords = await geocodeLocation(`${origem} ${estadoOrigem}`);
+    const destinoCoords = await geocodeLocation(`${destino} ${estadoDestino}`);
+    
+    distancia = await calculateDistanceHeiGIT(origemCoords, destinoCoords);
+    console.log('Distância obtida pela HeiGIT:', distancia);
 
-        distancia = await calculateDistanceHeiGIT(origemCoords, destinoCoords);
-        console.log('Distância obtida pela HeiGIT:', distancia);
       } catch (err) {
         console.error(err);
         alert("Não foi possível calcular a distância automaticamente. Insira manualmente.");
