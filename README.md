@@ -130,7 +130,3 @@ Projeto desenvolvido por Joelma Campos, como parte do desafio da Digital Innovat
 ---
 Este projeto está sob a licença MIT.
 Sinta-se livre para usar, modificar e compartilhar.
-
-4. Abra no navegador:
-   http://localhost:3000
-
