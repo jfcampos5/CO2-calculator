@@ -1,4 +1,4 @@
-﻿import express from "express";
+import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import fs from "fs";
@@ -12,7 +12,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN || "";
-const ORS_KEY = process.env.ORS_API_KEY || "";
+// Aceita tanto ORS_API_KEY quanto NEXT_PUBLIC_HEIGIT_API_KEY
+const ORS_KEY =
+  process.env.ORS_API_KEY || process.env.NEXT_PUBLIC_HEIGIT_API_KEY || "";
 
 // Middleware
 app.use(cors({ origin: "*" })); // permite chamadas de qualquer origem
