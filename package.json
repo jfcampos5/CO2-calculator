@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "dev": "nodemon server/server.js",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "body-parser": "^2.2.2",
@@ -12,6 +13,8 @@
   "devDependencies": {
     "live-server": "^1.2.0",
     "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
-
