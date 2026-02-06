@@ -2,26 +2,27 @@
 // Integração com API de Mapas (HeiGIT / OpenRouteService)
 // ================================
 
-// Use NEXT_PUBLIC_HEIGIT_API_KEY no Vercel para expor ao frontend
-const HEIGIT_API_KEY = process.env.NEXT_PUBLIC_HEIGIT_API_KEY;
+// A chave não deve ser acessada via process.env no frontend.
+// O backend já expõe os endpoints /api/geocode e /api/route.
+// Portanto, não precisamos da constante HEIGIT_API_KEY aqui.
 
 /**
- * Função para converter cidade + estado em coordenadas [lng, lat] usando HeiGIT
+ * Função para converter cidade + estado em coordenadas [lng, lat]
+ * usando o endpoint do backend (/api/geocode)
  * @param {string} local - Nome da cidade + estado (ex: "Salvador BA")
  * @returns {Promise<[number, number]>} Coordenadas [lng, lat]
  */
 async function geocodeLocation(local) {
   try {
-    const url = `https://api.openrouteservice.org/geocode/search?api_key=${HEIGIT_API_KEY}&text=${encodeURIComponent(local)}`;
-    const response = await fetch(url);
+    const response = await fetch(`/api/geocode?q=${encodeURIComponent(local)}`);
 
     if (!response.ok) {
       throw new Error(`Erro na geocodificação: ${response.statusText}`);
     }
 
     const data = await response.json();
-    if (data.features && data.features.length > 0) {
-      return data.features[0].geometry.coordinates; // [lng, lat]
+    if (data && data.lat && data.lon) {
+      return [data.lon, data.lat]; // [lng, lat]
     } else {
       throw new Error("Local não encontrado na geocodificação.");
     }
@@ -32,21 +33,28 @@ async function geocodeLocation(local) {
 }
 
 /**
- * Função para calcular distância usando API da HeiGIT (OpenRouteService)
+ * Função para calcular distância usando o endpoint do backend (/api/route)
  * @param {Array} origin - Coordenadas [lng, lat] de origem
  * @param {Array} destination - Coordenadas [lng, lat] de destino
  * @returns {Promise<number>} - Distância em km
  */
 async function calculateDistanceHeiGIT(origin, destination) {
   try {
-    const response = await fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${HEIGIT_API_KEY}`, {
+    const response = await fetch(`/api/route`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ coordinates: [origin, destination] })
+      body: JSON.stringify({
+        origin: { lat: origin[1], lon: origin[0] },
+        dest: { lat: destination[1], lon: destination[0] }
+      })
     });
 
+    if (!response.ok) {
+      throw new Error(`Erro ao calcular distância: ${response.statusText}`);
+    }
+
     const data = await response.json();
-    return data.routes[0].summary.distance / 1000; // metros → km
+    return data.distanceKm; // já vem em km do backend
   } catch (error) {
     console.error('Erro ao calcular distância com HeiGIT:', error);
     throw error;
@@ -54,4 +62,4 @@ async function calculateDistanceHeiGIT(origin, destination) {
 }
 
 // Exporta funções para uso em outros módulos
-export { HEIGIT_API_KEY, geocodeLocation, calculateDistanceHeiGIT };
+export { geocodeLocation, calculateDistanceHeiGIT };
