@@ -1,5 +1,5 @@
 ---
-## <img src="assets/img/logo.png" alt="" width="70" height="70" aria-hidden="true"/>Calc CO₂
+## <img src="public/assets/img/logo.png" alt="" width="70" height="70" aria-hidden="true"/>Calc CO₂
 
 ![Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
@@ -60,7 +60,7 @@ O objetivo é calcular as emissões de dióxido de carbono (CO₂) com base em d
 
 Aqui está uma prévia da interface do aplicativo:
 
-![Interface do App](assets/img/interface.png )
+![Interface do App](public/assets/img/interface.png )
 
 ---
 ## 🌐 Acesse o App
