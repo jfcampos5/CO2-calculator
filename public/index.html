@@ -6,10 +6,15 @@
   <title>Calc CO₂</title>
 
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-sA+e2atXy6CkB4E1r6k8lwZ5XnE1B3p6k5QY5u1hZfM="
+  crossorigin=""
+  />
   
   <!-- Leaflet (mapa) --> 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer crossorigin=""></script>
   
   <!-- Estilo personalizado -->
   <link rel="stylesheet" href="/style.css">
@@ -18,6 +23,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 </head>
+
 <body>
   <noscript>Para usar a Calculadora de CO<sub>2</sub> você precisa habilitar JavaScript.</noscript>
 
@@ -290,19 +296,33 @@
         </form>
         </aside>
 
-      <!-- ===== CONTENT (oculto até calcular) ===== -->
+    <!-- ===== CONTENT (oculto até calcular) ===== -->
       <section class="content">       
 
-      <!-- MAPA -->
-      <section class="card is-hidden" data-panel="map" aria-labelledby="map-title">
-        <h2 id="map-title" class="card-title">Mapa da Rota</h2>
-        <div id="map" class="map-container" role="application" aria-label="Mapa interativo do Brasil" tabindex="0"></div>
-        <div class="map-legend">
-          <span class="badge">Origem</span>
-          <span class="badge badge-alt">Destino</span>
-          <span class="badge badge-info">Trajeto</span>
-        </div>
-      </section>
+  <!-- MAPA -->
+<section
+  class="card is-hidden"
+  data-panel="map"
+  aria-labelledby="map-title"
+  data-map-section
+>
+  <h2 id="map-title" class="card-title">Mapa da Rota</h2>
+
+  <div
+    id="map"
+    class="map-container"
+    role="application"
+    aria-label="Mapa interativo da rota"
+    tabindex="0"
+    data-map-container
+  ></div>
+
+  <div class="map-legend">
+    <span class="badge">Origem</span>
+    <span class="badge badge-alt">Destino</span>
+    <span class="badge badge-info">Trajeto</span>
+  </div>
+</section>
 
       <!-- RESULTADOS -->
       <section class="card is-hidden" data-panel="results" aria-labelledby="results-title">
@@ -362,7 +382,8 @@
       <section class="card is-hidden" data-panel="history" aria-labelledby="history-title">
         <h2 id="history-title" class="card-title">Histórico de viagens</h2>
         <ul id="history-list" class="history-list" role="list" aria-live="polite">
-        <!-- Cada viagem renderizada como <li role="listitem"> -->
+
+      <!-- Cada viagem renderizada como <li role="listitem"> -->
         </ul>
         <div class="form-inline">
           <button type="button" id="btn-clear-history" class="btn btn-ghost">Limpar histórico</button>
@@ -371,11 +392,6 @@
       </section>
     </div>
   </main>
-
-  <section class="card" data-panel="map" aria-labelledby="map-title">
-    <h2 id="map-title" class="card-title">Mapa da Rota</h2> 
-    <div id="map" class="map-container"></div> 
-  </section>
 
     <!-- ===== FOOTER ===== -->
   <footer class="app-footer" role="contentinfo">
