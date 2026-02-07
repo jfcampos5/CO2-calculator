@@ -266,3 +266,28 @@ async function processarMapa(enderecoOrigem, enderecoDestino) {
     mostrarErroDistancia();
   }
 }
+/**
+ * Desenha a rota no mapa e ajusta o zoom
+ * @param {Object} routeGeoJson - GeoJSON retornado da API HeiGIT
+ * @param {Object} origin - {lat, lng}
+ * @param {Object} dest - {lat, lng}
+ */
+function drawRouteOnMap(routeGeoJson, origin, dest) {
+  // Remove rota antiga
+  if (rotaLayer) {
+    map.removeLayer(rotaLayer);
+  }
+
+  // Desenha nova rota
+  rotaLayer = L.geoJSON(routeGeoJson, {
+    style: { color: "#2563eb", weight: 4 }
+  }).addTo(map);
+
+  // Atualiza marcadores
+  criarMarcador(origin.lat, origin.lng, "origem");
+  criarMarcador(dest.lat, dest.lng, "destino");
+
+  // Ajusta zoom para caber a rota
+  const bounds = rotaLayer.getBounds();
+  map.fitBounds(bounds, { padding: [50, 50] });
+}
