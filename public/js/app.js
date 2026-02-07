@@ -111,3 +111,158 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+/* =================================================
+   BLOCO MAPA — (Leaflet + HeiGIT)
+   ================================================= */
+
+let map;
+let origemMarker;
+let destinoMarker;
+let rotaLayer;
+
+/**
+ * Inicializa o mapa apenas quando o painel é exibido
+ */
+function initMapa() {
+  if (map) return; // evita inicializar duas vezes
+
+  map = L.map("map", {
+    center: [-14.235, -51.9253], // Brasil
+    zoom: 4,
+    scrollWheelZoom: true,
+  });
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap contributors",
+  }).addTo(map);
+}
+
+/**
+ * Cria ou atualiza marcador
+ */
+function criarMarcador(lat, lng, tipo) {
+  const marker = L.marker([lat, lng]);
+
+  if (tipo === "origem") {
+    if (origemMarker) map.removeLayer(origemMarker);
+    origemMarker = marker.addTo(map).bindPopup("Origem").openPopup();
+  }
+
+  if (tipo === "destino") {
+    if (destinoMarker) map.removeLayer(destinoMarker);
+    destinoMarker = marker.addTo(map).bindPopup("Destino").openPopup();
+  }
+}
+
+/**
+ * Calcula rota e distância usando HeiGIT
+ */
+async function calcularRota(origem, destino) {
+  const url = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
+
+  const body = {
+    coordinates: [
+      [origem.lng, origem.lat],
+      [destino.lng, destino.lat],
+    ],
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) throw new Error("Erro na rota");
+
+    const data = await response.json();
+
+    if (rotaLayer) map.removeLayer(rotaLayer);
+
+    rotaLayer = L.geoJSON(data, {
+      style: {
+        color: "#2563eb",
+        weight: 4,
+      },
+    }).addTo(map);
+
+    map.fitBounds(rotaLayer.getBounds());
+
+    const distanciaKm =
+      data.features[0].properties.summary.distance / 1000;
+
+    atualizarDistancia(distanciaKm);
+  } catch (error) {
+    console.warn("Erro ao calcular rota:", error);
+    mostrarErroDistancia();
+  }
+}
+
+/**
+ * Atualiza distância automática
+ */
+function atualizarDistancia(km) {
+  const campo = document.querySelector("#distancia");
+
+  if (campo) {
+    campo.value = km.toFixed(2);
+    campo.readOnly = true;
+  }
+}
+
+/**
+ * Fallback: erro na distância automática
+ */
+function mostrarErroDistancia() {
+  const campo = document.querySelector("#distancia");
+
+  if (campo) {
+    campo.value = "";
+    campo.readOnly = false;
+    campo.placeholder =
+      "Não foi possível calcular a distância automaticamente. Insira manualmente.";
+  }
+}
+
+/**
+ * Converte endereço em coordenadas (Nominatim)
+ */
+async function geocodificar(endereco) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+    endereco
+  )}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+
+  if (!data.length) throw new Error("Endereço não encontrado");
+
+  return {
+    lat: parseFloat(data[0].lat),
+    lng: parseFloat(data[0].lon),
+  };
+}
+
+/**
+ * Função principal chamada ao calcular rota
+ */
+async function processarMapa(enderecoOrigem, enderecoDestino) {
+  initMapa();
+
+  try {
+    const origem = await geocodificar(enderecoOrigem);
+    const destino = await geocodificar(enderecoDestino);
+
+    criarMarcador(origem.lat, origem.lng, "origem");
+    criarMarcador(destino.lat, destino.lng, "destino");
+
+    calcularRota(origem, destino);
+  } catch (error) {
+    console.warn("Erro no mapa:", error);
+    mostrarErroDistancia();
+  }
+}
