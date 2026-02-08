@@ -126,9 +126,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const destCity = document.getElementById("cidade-destino").value;
     const destState = document.getElementById("estado-destino").value;
 
+    // 🔹 cálculo (já funcionava)
     calcularRota(originCity, originState, destCity, destState);
+
+    // 🔹 mapa + rota automática (NOVO)
+    processarMapa(
+      `${originCity}, ${originState}, Brasil`,
+      `${destCity}, ${destState}, Brasil`
+    );
   });
 });
+
 
 /* =================================================
    BLOCO MAPA — Leaflet + HeiGIT
