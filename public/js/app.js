@@ -260,12 +260,32 @@ async function processarMapa(enderecoOrigem, enderecoDestino) {
     criarMarcador(origem.lat, origem.lng, "origem");
     criarMarcador(destino.lat, destino.lng, "destino");
 
-    calcularRota(origem, destino);
+    calcularRotaMapa(origem, destino);
   } catch (error) {
     console.warn("Erro no mapa:", error);
     mostrarErroDistancia();
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Desenha a rota no mapa e ajusta o zoom
  * @param {Object} routeGeoJson - GeoJSON retornado da API HeiGIT
