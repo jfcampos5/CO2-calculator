@@ -20,20 +20,19 @@ export default async function handler(req, res) {
       'https://api.openrouteservice.org/v2/directions/driving-car/geojson';
 
     const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      coordinates: [
-        [origin.lng ?? origin.lon, origin.lat],
-        [dest.lng ?? dest.lon, dest.lat]
-      ]
-    })
-  });
-
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': apiKey 
+      },
+      body: JSON.stringify({
+        coordinates: [
+          [origin.lng ?? origin.lon, origin.lat],
+          [dest.lng ?? dest.lon, dest.lat]
+        ]
+      })
+    });
 
     if (!response.ok) {
       const text = await response.text();
