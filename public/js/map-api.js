@@ -2,10 +2,6 @@
 // Integração com API de Mapas (HeiGIT / OpenRouteService)
 // ================================
 
-// A chave não deve ser acessada via process.env no frontend.
-// O backend já expõe os endpoints /api/geocode e /api/route.
-// Portanto, não precisamos da constante HEIGIT_API_KEY aqui.
-
 /**
  * Função para converter cidade + estado em coordenadas [lng, lat]
  * usando o endpoint do backend (/api/geocode)
@@ -21,8 +17,11 @@ async function geocodeLocation(local) {
     }
 
     const data = await response.json();
-    if (data && data.lat && data.lon) {
-      return [data.lon, data.lat]; // [lng, lat]
+
+    // Ajuste correto para o formato retornado pela API (HeiGIT / ORS)
+    if (data?.features?.length > 0) {
+      const [lon, lat] = data.features[0].geometry.coordinates;
+      return [lon, lat]; // [lng, lat]
     } else {
       throw new Error("Local não encontrado na geocodificação.");
     }
