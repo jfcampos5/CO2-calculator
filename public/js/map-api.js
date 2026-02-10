@@ -59,6 +59,5 @@ async function calculateDistanceHeiGIT(origin, destination) {
     throw error;
   }
 }
-
 // Exporta funções para uso em outros módulos
 export { geocodeLocation, calculateDistanceHeiGIT };
